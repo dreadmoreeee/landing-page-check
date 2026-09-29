@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "landing-page-check"
+version = "1.0.0"
+description = "Check an ads landing page the way paid mobile traffic sees it: parameters through redirects, message match, CTA above the fold, speed, tap targets, consent."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Marvin Palencia" }]
+requires-python = ">=3.10"
+dependencies = ["playwright>=1.40"]
+keywords = ["landing page", "google ads", "ppc", "utm", "gclid", "playwright", "seo", "consent"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Environment :: Console",
+    "Topic :: Internet :: WWW/HTTP :: Site Management",
+]
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[project.scripts]
+landing-page-check = "landing_page_check.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/dreadmoreeee/landing-page-check"
+
+[tool.setuptools]
+packages = ["landing_page_check"]

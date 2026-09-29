@@ -1,0 +1,29 @@
+# Example CI job: fail the build when the landing page drops below 80
+# or has a high-priority problem. Copy to .github/workflows/ in your repo.
+name: landing-page-check
+
+on:
+  schedule:
+    - cron: "0 7 * * 1"   # every Monday
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install landing-page-check && python -m playwright install --with-deps chromium
+      - run: >
+          landing-page-check
+          "https://www.example.com/offer?utm_source=google&utm_medium=cpc&utm_campaign=spring&gclid=CI_TEST"
+          --keywords "roof repair, roofer"
+          --headline "Fast Roof Repair in Exampleville"
+          --fail-under 80 --fail-on high
+          -o report.md
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: landing-page-report
+          path: report.md
